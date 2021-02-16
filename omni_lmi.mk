@@ -16,23 +16,23 @@
 # limitations under the License.
 #
 
-# Inherit from those products. Most specific first.
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product-if-exists, $(SRC_TARGET_DIR)/product/embedded.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
+PRODUCT_RELEASE_NAME := lmi
+DEVICE_PATH := device/xiaomi/lmi
 
-# Inherit from lmi device
-$(call inherit-product, device/xiaomi/lmi/device.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 
-# Inherit some common Omni stuff.
+# Inherit from our custom product configuration
 $(call inherit-product, vendor/omni/config/common.mk)
-$(call inherit-product, vendor/omni/config/gsm.mk)
 
-# Device identifier. This must come after all inclusions
+#PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,$(LOCAL_PATH)/recovery/root,recovery/root)
+
+## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := lmi
 PRODUCT_NAME := omni_lmi
-PRODUCT_BRAND := POCO
-PRODUCT_MODEL := POCO
-PRODUCT_MANUFACTURER := xiaomi
-PRODUCT_RELEASE_NAME := POCO POCO
+PRODUCT_BRAND := Xiaomi
+PRODUCT_MODEL := POCO F2 Pro
+PRODUCT_MANUFACTURER := Xiaomi
+
+# HACK: Set vendor patch level
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.build.security_patch=2099-12-31
